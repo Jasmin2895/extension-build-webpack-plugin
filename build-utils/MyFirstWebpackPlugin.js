@@ -9,15 +9,14 @@ class MyFirstWebpackPlugin {
             cb();
         })
         compiler.hooks.compilation.tap("MyFirstWebpackPlugin", (compilation, params)=> {
-            new MyFirstWebpackCompilationPlugin.apply(compilation);
+            new MyFirstWebpackCompilationPlugin().apply(compilation);
         })
     }
 }
 
 class MyFirstWebpackCompilationPlugin {
     apply(compilation){
-        compilation.hooks.seal.tap("MyFirstWebpackCompilationPlugin", ()=> {
-
+        compilation.hooks.seal.tap("MyFirstWebpackPlugin", ()=> {
         })
     }
 }
