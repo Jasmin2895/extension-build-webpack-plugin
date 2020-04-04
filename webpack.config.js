@@ -4,12 +4,14 @@ const webpackMerge = require("webpack-merge");
 
 const modeConfig = env => require(`./build-utils/webpack.${env}`)(env);
 const presetConfig = require("./build-utils/loadPresets");
-const MyFirstWebpackPlugin = require("./build-utils/MyFirstWebpackPlugin")
+const MyFirstWebpackPlugin = require("./build-utils/MyFirstWebpackPlugin");
+const CheckFilesChangePlugin = require("./build-utils/CheckFilesChangePlugin");
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge(
     {
       mode,
+      watch: true,
       module: {
         rules: [
           {
@@ -29,7 +31,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         filename: "bundle.js",
         chunkFilename: "[name].lazy-chunk.js"
       },
-      plugins: [new MyFirstWebpackPlugin,new HtmlWebpackPlugin(), new webpack.ProgressPlugin()]
+      plugins: [new CheckFilesChangePlugin(), new MyFirstWebpackPlugin,new HtmlWebpackPlugin(), new webpack.ProgressPlugin()]
     },
     modeConfig(mode),
     presetConfig({ mode, presets })
