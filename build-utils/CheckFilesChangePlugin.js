@@ -1,6 +1,7 @@
 var fs = require('fs');
 var archiver = require('archiver');
 var path = require("path");
+const chalk = require('chalk');
 
 
 class CheckFilesChangePlugin {
@@ -11,7 +12,7 @@ class CheckFilesChangePlugin {
         //create a zip file of the whole directory
         compiler.hooks.emit.tapAsync("CheckFilesChangePlugin", (compilation, cb)=> {
            
-            console.log("dirname", __dirname, `${process.cwd()}/src`, )
+            console.log( chalk.bold.red("dirname"), chalk.bold.yellow(process.env.NODE_ENV))
             fs.access("./srcvhbk", function(error) {
                 if (error) {
                   console.log("Directory does not exist.")
@@ -19,7 +20,7 @@ class CheckFilesChangePlugin {
                   console.log("Directory exists.")
                 }
               })
-            this.createzipFile();
+            // this.createzipFile();
         })
         // console.log("path", path.dirname("src"))
         
@@ -41,9 +42,7 @@ class CheckFilesChangePlugin {
         archive.pipe(output);
 
         archive.directory('src/', false);
-        // archive.bulk([
-        //     { expand: true, cwd: 'source', src: ['**'], dest: 'source'}
-        // ]);
+        
         archive.finalize();
     }
     
