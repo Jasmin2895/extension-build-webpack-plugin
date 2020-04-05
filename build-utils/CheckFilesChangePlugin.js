@@ -1,6 +1,6 @@
 var fs = require('fs');
 var archiver = require('archiver');
-var path = ""
+var path = require("path");
 
 
 class CheckFilesChangePlugin {
@@ -10,23 +10,41 @@ class CheckFilesChangePlugin {
     apply(compiler) {
         //create a zip file of the whole directory
         compiler.hooks.emit.tapAsync("CheckFilesChangePlugin", (compilation, cb)=> {
-            console.log("compiler", compilation.assets)
-            this.createzipFile(compilation.assets);
+           
+            console.log("dirname", __dirname, `${process.cwd()}/src`, )
+            fs.access("./srcvhbk", function(error) {
+                if (error) {
+                  console.log("Directory does not exist.")
+                } else {
+                  console.log("Directory exists.")
+                }
+              })
+            this.createzipFile();
         })
-        console.log("__dirname", __dirname)
+        // console.log("path", path.dirname("src"))
         
     }
-    createzipFile(data) {
-        console.log("createzipFile")
-        let output = fs.createWriteStream(data);
-        output.on("data",function(chunk){
-            console.log("New Chunk Received");
-            console.log(chunk);
+    createzipFile() {
+        console.log("createzipFile");
+        let output = fs.createWriteStream("prod.zip");
+        let archive = archiver("zip");
+
+        output.on("close", function(){
+            console.log(archive.pointer() + ' total bytes');
+            console.log('archiver has been finalized and the output file descriptor has closed.');
         })
-        // let archive = archiver("zip", {
-        //     zlib: {level:9}
-        // })
-        // archive.pipe(output);
+
+        archive.on("error", function(err){
+            throw err;
+        })
+
+        archive.pipe(output);
+
+        archive.directory('src/', false);
+        // archive.bulk([
+        //     { expand: true, cwd: 'source', src: ['**'], dest: 'source'}
+        // ]);
+        archive.finalize();
     }
     
 }
