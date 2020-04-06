@@ -60,3 +60,4 @@ typings/
 # webpack default dist folder
 dist/
 
+.DS_Store/

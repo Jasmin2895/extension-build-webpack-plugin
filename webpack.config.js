@@ -1,11 +1,10 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackMerge = require("webpack-merge");
-require('dotenv').config()
 
-const modeConfig = env => require(`./build-utils/webpack.${env}`)(env);
-const presetConfig = require("./build-utils/loadPresets");
-const BrowserExtensionPlugin = require("./build-utils");
+const modeConfig = env => require(`./config/webpack.${env}`)(env);
+const presetConfig = require("./config/loadPresets");
+const BrowserExtensionPlugin = require("./config");
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge(
