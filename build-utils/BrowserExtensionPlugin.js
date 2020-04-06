@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const bump = require('json-bump');
 require('dotenv').config()
 
-class CheckFilesChangePlugin {
+class BrowserExtensionPlugin {
     constructor(options) {
         this.checkWorkingEnv(options)
         this.changeVersion(options);
@@ -12,17 +12,17 @@ class CheckFilesChangePlugin {
     apply(compiler) {
         compiler.hooks.emit.tap("CheckFilesChangePlugin", (stats, cb)=> {
            let dirFormat=false;
-            fs.access("./src", function(error) {
+            fs.access("./src", (error) =>{
                 if (error) {
                   console.log(chalk.bold.redBright("Extension Plugin ERR: src directory is missing"));
                 } else {
                     dirFormat=true;
+                    if(dirFormat && this.checkWorkingEnv()){
+                        this.createzipFile();
+                        this.changeVersion();
+                    }
                 }
               })
-              if(dirFormat && this.checkWorkingEnv()){
-                  this.createzipFile();
-                  this.changeVersion();
-              }
         })        
     }
     checkWorkingEnv(devMode) {
@@ -30,6 +30,7 @@ class CheckFilesChangePlugin {
             return true;
     }
     createzipFile() {
+        console.log("createzipFile")
         let output = fs.createWriteStream("prod.zip");
         let archive = archiver("zip");
 
@@ -55,4 +56,4 @@ class CheckFilesChangePlugin {
     
 }
 
-module.exports = CheckFilesChangePlugin;
+module.exports = BrowserExtensionPlugin;
