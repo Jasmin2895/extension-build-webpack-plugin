@@ -1,40 +1,41 @@
 var fs = require('fs');
 var archiver = require('archiver');
-var path = require("path");
 const chalk = require('chalk');
 const bump = require('json-bump');
-const glob = require('glob');
+require('dotenv').config()
 
 class CheckFilesChangePlugin {
     constructor(options) {
-        console.log(chalk.bold.greenBright(options.devMode))
-        this.changeVersion(options.devMode);
+        this.checkWorkingEnv(options)
+        this.changeVersion(options);
     }
     apply(compiler) {
-        compiler.hooks.emit.tapAsync("CheckFilesChangePlugin", (compilation, cb)=> {
-           
-            console.log( chalk.bold.red("dirname"), chalk.bold.yellow(process.env.NODE_ENV))
-            fs.access("./srcvhbk", function(error) {
+        compiler.hooks.emit.tap("CheckFilesChangePlugin", (stats, cb)=> {
+           let dirFormat=false;
+            fs.access("./src", function(error) {
                 if (error) {
-                  console.log("Directory does not exist.")
+                  console.log(chalk.bold.redBright("Extension Plugin ERR: src directory is missing"));
                 } else {
-                  console.log("Directory exists.")
+                    dirFormat=true;
                 }
               })
-            // this.createzipFile();
-            
-        })
-        // console.log("path", path.dirname("src"))
-        
+              if(dirFormat && this.checkWorkingEnv()){
+                  this.createzipFile();
+                  this.changeVersion();
+              }
+        })        
+    }
+    checkWorkingEnv(devMode) {
+        if(process.env.NODE_ENV==="production" || devMode) 
+            return true;
     }
     createzipFile() {
-        console.log("createzipFile");
         let output = fs.createWriteStream("prod.zip");
         let archive = archiver("zip");
 
         output.on("close", function(){
-            console.log(archive.pointer() + ' total bytes');
-            console.log('archiver has been finalized and the output file descriptor has closed.');
+            console.log(chalk.bold.grey(archive.pointer() + ' total bytes'));
+            console.log(chalk.bold.green('archiver has been finalized and the output file descriptor has closed.'));
         })
 
         archive.on("error", function(err){
@@ -44,22 +45,12 @@ class CheckFilesChangePlugin {
         archive.pipe(output);
 
         archive.directory('src/', false);
+        console.log(chalk.bold.cyanBright("prod.zip file created in root directory"))
         
         archive.finalize();
     }
-    changeVersion(mode) {
-        let prodMode=true, devTestMode= false;
-        if(mode)
-            devTestMode=true;
-
-        glob(`${process.cwd()}/src` + '**/*.json', {}, (err, files)=>{
-            console.log(files)
-            if(files.length >1)
-                console.log("manifest.json exits")
-            })
-
-        if(prodMode && devTestMode)
-            bump('src/manifest.json', { minor : 1 })
+    changeVersion() {
+        bump('src/manifest.json', { minor : 1 })
     }
     
 }
