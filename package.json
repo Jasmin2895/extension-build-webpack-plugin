@@ -13,7 +13,10 @@
     "dev:debug": "npm run debug -- --env.mode development"
   },
   "keywords": [
-    "webpack"
+    "webpack",
+    "plugin",
+    "extension",
+    "browser"
   ],
   "author": "Jasmin Virdi",
   "license": "MIT",

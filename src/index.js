@@ -1,41 +1,57 @@
-import nav from "./nav";
-// import * as GSAP from "gsap";
-const getGSAP = () => import("gsap");
-// import { footer } from "./footer";
-const getFooter = () => import(/* webpackChunkName: "footer" */ "./footer");
-const getLodashUniq = () => import("lodash-es/uniq");
-import makeButton from "./button";
-import { makeColorStyle } from "./button-styles";
-import makeImage from "./image";
-import imageUrl from "./webpack-logo.jpg";
-import css from "./footer.css";
-import buttonStyles from "./button.css";
+var fs = require('fs');
+var archiver = require('archiver');
+const chalk = require('chalk');
+const bump = require('json-bump');
+require('dotenv').config()
 
-const setButtonStyle = (color) => import(`./button-styles/${color}.js`);
+class BrowserExtensionPlugin {
+    constructor(options) {
+        this.checkWorkingEnv(options)
+    }
+    apply(compiler) {
+        compiler.hooks.emit.tap("BrowserExtensionPlugin", (stats, cb)=> {
+           let dirFormat=false;
+            fs.access("./src", (error) =>{
+                if (error) {
+                  console.log(chalk.bold.redBright("Extension Plugin ERR: src directory is missing"));
+                } else {
+                    dirFormat=true;
+                    if(dirFormat && this.checkWorkingEnv()){
+                        this.createzipFile();
+                        this.changeVersion();
+                    }
+                }
+              })
+        })        
+    }
+    checkWorkingEnv(devMode) {
+        if(process.env.NODE_ENV==="production" || devMode) 
+            return true;
+    }
+    createzipFile() {
+        let output = fs.createWriteStream("prod.zip");
+        let archive = archiver("zip");
 
-const image = makeImage(imageUrl);
-const button = makeButton("Yay! A Button!");
-button.style = makeColorStyle("cyan");
+        output.on("close", function(){
+            console.log(chalk.bold.grey(archive.pointer() + ' total bytes'));
+            console.log(chalk.bold.green('archiver has been finalized and the output file descriptor has closed.'));
+        })
 
-document.body.appendChild(button);
+        archive.on("error", function(err){
+            throw err;
+        })
 
-button.addEventListener("click", e => {
-    getFooter().then(footerModule => {
-        document.body.appendChild(footerModule.footer);
-    });
+        archive.pipe(output);
 
-    getGSAP().then(gsap => {
-        console.log(gsap);
-    });
+        archive.directory('src/', false);
+        console.log(chalk.bold.cyanBright("prod.zip file created in root directory"))
+        
+        archive.finalize();
+    }
+    changeVersion() {
+        bump('src/manifest.json', { minor : 1 })
+    }
+    
+}
 
-    setButtonStyle("blue").then(styleStr => {
-        debugger;
-        console.log(styleStr.default);
-        button.style = styleStr.default;
-    });
-
-
-});
-
-document.body.appendChild(image);
-
+module.exports = BrowserExtensionPlugin;

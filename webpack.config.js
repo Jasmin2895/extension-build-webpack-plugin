@@ -5,7 +5,7 @@ require('dotenv').config()
 
 const modeConfig = env => require(`./build-utils/webpack.${env}`)(env);
 const presetConfig = require("./build-utils/loadPresets");
-const BrowserExtensionPlugin = require("./build-utils/BrowserExtensionPlugin");
+const BrowserExtensionPlugin = require("./build-utils/index.js");
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge(
