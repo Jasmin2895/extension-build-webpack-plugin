@@ -1,7 +1,7 @@
 {
-  "name": "webpack-workshop-2018",
+  "name": "extension-build-webpack-plugin",
   "version": "1.0.0",
-  "description": "Learning resources for the webpack academy workshop series for 2018",
+  "description": "Creating production ready zip file and update version of browser extension",
   "main": "index.js",
   "scripts": {
     "webpack-dev-server": "webpack-dev-server",
@@ -15,14 +15,9 @@
     "prod:debug": "npm run debug -- --env.mode production",
     "dev:debug": "npm run debug -- --env.mode development"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jasmin2895/webpack-plugin.git"
-  },
-  "keywords": [],
-  "author": "",
+  "keywords": ["webpack"],
+  "author": "Jasmin Virdi",
   "license": "MIT",
-  "homepage": "https://github.com/Jasmin2895/webpack-plugin#readme",
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
