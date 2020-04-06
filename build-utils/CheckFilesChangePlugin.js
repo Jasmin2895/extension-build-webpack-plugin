@@ -8,9 +8,9 @@ const glob = require('glob');
 class CheckFilesChangePlugin {
     constructor(options) {
         console.log(chalk.bold.greenBright(options.devMode))
+        this.changeVersion(options.devMode);
     }
     apply(compiler) {
-        //create a zip file of the whole directory
         compiler.hooks.emit.tapAsync("CheckFilesChangePlugin", (compilation, cb)=> {
            
             console.log( chalk.bold.red("dirname"), chalk.bold.yellow(process.env.NODE_ENV))
@@ -22,6 +22,7 @@ class CheckFilesChangePlugin {
                 }
               })
             // this.createzipFile();
+            
         })
         // console.log("path", path.dirname("src"))
         
@@ -46,9 +47,9 @@ class CheckFilesChangePlugin {
         
         archive.finalize();
     }
-    changeVersion() {
+    changeVersion(mode) {
         let prodMode=true, devTestMode= false;
-        if(this.options.devMode)
+        if(mode)
             devTestMode=true;
 
         glob(`${process.cwd()}/src` + '**/*.json', {}, (err, files)=>{
