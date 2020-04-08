@@ -36,6 +36,7 @@ build/Release
 node_modules/
 jspm_packages/
 .vscode/
+.DS_Store/
 
 # Typescript v1 declaration files
 typings/
@@ -60,5 +61,3 @@ typings/
 
 # webpack default dist folder
 dist/
-
-.DS_Store/

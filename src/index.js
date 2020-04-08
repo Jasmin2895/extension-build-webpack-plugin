@@ -1,7 +1,7 @@
-import WebpackLogo from './webpack-logo.jpg'
-import './index.scss'
+import WebpackLogo from './images/webpack-logo.jpg';
+import './styles/index.scss';
 
-// Create SVG logo node
+// Create logo node
 const logo = document.createElement('img')
 logo.src = WebpackLogo
 
