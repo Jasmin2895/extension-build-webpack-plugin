@@ -3,14 +3,14 @@
   "version": "1.1.3",
   "description": "Creating production ready zip file and update version of browser extension",
   "main": "index.js",
+  "files": [
+    "src/index.js"
+  ],
   "scripts": {
-    "webpack-dev-server": "webpack-dev-server",
-    "webpack": "webpack",
-    "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
-    "prod": "npm run webpack -- --env.mode production",
-    "dev": "npm run webpack-dev-server -- --env.mode development --hot",
-    "prod:debug": "npm run debug -- --env.mode production",
-    "dev:debug": "npm run debug -- --env.mode development"
+    "clean": "rimraf dist",
+    "test": "standard src/*",
+    "babel-version": "babel --version",
+    "build": "babel src/index.js --out-dir dist --copy-files --source-maps"
   },
   "keywords": [
     "webpack",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
+    "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.0-beta",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
