@@ -1,38 +1,14 @@
-import nav from "./nav";
-// import * as GSAP from "gsap";
-const getGSAP = () => import("gsap");
-// import { footer } from "./footer";
-const getFooter = () => import(/* webpackChunkName: "footer" */ "./footer");
-import makeButton from "./button";
-import { makeColorStyle } from "./button-styles";
-import makeImage from "./image";
-import imageUrl from "./webpack-logo.jpg";
+import WebpackLogo from './webpack-logo.jpg'
+import './index.scss'
 
-const setButtonStyle = (color) => import(`./button-styles/${color}.js`);
+// Create SVG logo node
+const logo = document.createElement('img')
+logo.src = WebpackLogo
 
-const image = makeImage(imageUrl);
-const button = makeButton("Yay! A Button!");
-button.style = makeColorStyle("cyan");
+// Create heading node
+const greeting = document.createElement('h1')
+greeting.textContent = "Hello World"
 
-document.body.appendChild(button);
-
-button.addEventListener("click", e => {
-    getFooter().then(footerModule => {
-        document.body.appendChild(footerModule.footer);
-    });
-
-    getGSAP().then(gsap => {
-        console.log(gsap);
-    });
-
-    setButtonStyle("blue").then(styleStr => {
-        debugger;
-        console.log(styleStr.default);
-        button.style = styleStr.default;
-    });
-
-
-});
-
-document.body.appendChild(image);
-
+// Append SVG and heading nodes to the DOM
+const app = document.querySelector('#root')
+app.append(logo, greeting)

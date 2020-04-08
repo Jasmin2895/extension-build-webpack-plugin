@@ -23,7 +23,15 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
                 }
               }
             ]
-          }
+          },
+          {
+            test: /\.(scss|css)$/,
+            use: [
+              'style-loader',
+              { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
+              { loader: 'sass-loader', options: { sourceMap: true } },
+            ],
+          },
         ]
       },
       output: {
