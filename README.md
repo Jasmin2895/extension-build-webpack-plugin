@@ -1,9 +1,14 @@
 # Webpack plugin for extension build
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) ![David](https://img.shields.io/david/dev/taniarascia/webpack-boilerplate)
+
 This plugin helps to create a production ready build for chrome extension. This helps in updating the version of manifest.json file and create a zip folder of the source code.
 
-### Installation
-  
-```npm i extension-build-webpack-plugin```
+
+## Installation
+
+```
+npm i extension-build-webpack-plugin
+```
 
 This extenion uses src directory to create a zip folder. In order to use this plugin make sure all the browser extension files are in src directory including the manifest.json file.
 
@@ -11,8 +16,8 @@ This extenion uses src directory to create a zip folder. In order to use this pl
 
 In your `webpack.config.js` file add the following code.
 
-```
-const BrowserExtensionPlugin = require("webpack-plugin");
+```javascript
+const BrowserExtensionPlugin = require("extension-build-webpack-plugin");
 
 module.exports = {
   entry: './path/to/my/entry/file.js',
@@ -35,4 +40,4 @@ module.exports = {
 };
 ```
 
-##### Note: devMode=true is used for creating a zip file and updating version in dev environment by default it is set to false.
+### Note: devMode=true is used for creating a zip file and updating version in dev environment by default it is set to false.
