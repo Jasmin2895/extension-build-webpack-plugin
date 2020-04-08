@@ -12,7 +12,7 @@ This extenion uses src directory to create a zip folder. In order to use this pl
 In your `webpack.config.js` file add the following code.
 
 ```
-const BrowserExtensionPlugin = require("./config");
+const BrowserExtensionPlugin = require("webpack-plugin");
 
 module.exports = {
   entry: './path/to/my/entry/file.js',
