@@ -4,13 +4,15 @@
   "description": "Creating production ready zip file and update version of browser extension",
   "main": "index.js",
   "files": [
-    "src/index.js"
+    "src",
+    "dist"
   ],
   "scripts": {
     "clean": "rimraf dist",
     "test": "standard src/*",
     "babel-version": "babel --version",
-    "build": "babel src/index.js --out-dir dist --copy-files --source-maps"
+    "build": "babel src/index.js --out-dir dist --copy-files --source-maps",
+    "prepublishOnly": "babel src --out-dir dist --copy-files --source-maps"
   },
   "keywords": [
     "webpack",
