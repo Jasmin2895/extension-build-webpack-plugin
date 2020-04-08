@@ -12,7 +12,7 @@ npm i extension-build-webpack-plugin
 
 This extenion uses src directory to create a zip folder. In order to use this plugin make sure all the browser extension files are in src directory including the manifest.json file.
 
-### Usage
+## Usage
 
 In your `webpack.config.js` file add the following code.
 
