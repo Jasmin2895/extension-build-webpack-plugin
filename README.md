@@ -45,5 +45,5 @@ You can add custom options to modify the behaviour of plugin.
 
 1. `devMode`: Enables the plugin to work in devMode. This plugin runs in production mode, to enable this plugin in development mode set the flag to **true**.
 2. `directory`: To change the name of the output zip directory. If not given a definite name it will create a zip file with a name **prod.zip**. The zip file will be created in the root directory.
-3.`directory`: Name of the directory which contains the `manifest.json` file. If not defined it will assume **src**.
-4.`updateType`: Defines the type of version update which can be `major` or `minor`.
+3. `directory`: Name of the directory which contains the `manifest.json` file. If not defined it will assume **src**.
+4. `updateType`: Defines the type of version update which can be `major` or `minor`.
