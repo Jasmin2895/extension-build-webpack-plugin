@@ -34,8 +34,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new BrowserExtensionPlugin({devMode: false, name: "my-first-webpack.zip", directory: "src", updateType: "minor"}),
-    new HtmlWebpackPlugin({template: './src/index.html'})
+    new BrowserExtensionPlugin({devMode: false, name: "my-first-webpack.zip", directory: "src", updateType: "minor"})
   ]
 };
 ```
