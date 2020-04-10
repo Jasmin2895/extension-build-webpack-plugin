@@ -29,7 +29,7 @@ class BrowserExtensionPlugin {
             return true;
     }
     createzipFile() {
-        let output = fs.createWriteStream("prod.zip");
+        let output = fs.createWriteStream(`${options.name}.zip` || "prod.zip");
         let archive = archiver("zip");
 
         output.on("close", function(){
