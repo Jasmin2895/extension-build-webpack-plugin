@@ -1,5 +1,5 @@
 # Webpack plugin for extension build
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) ![David](https://img.shields.io/david/dev/taniarascia/webpack-boilerplate)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This plugin helps to create a production ready build for chrome extension. This helps in updating the version of manifest.json file and create a zip folder of the source code.
 
@@ -34,10 +34,16 @@ module.exports = {
     ]
   },
   plugins: [
-    new BrowserExtensionPlugin({devMode: false}),
+    new BrowserExtensionPlugin({devMode: false, name: "my-first-webpack.zip", directory: "src", updateType: "minor"}),
     new HtmlWebpackPlugin({template: './src/index.html'})
   ]
 };
 ```
+## Custom Options
 
-### Note: devMode=true is used for creating a zip file and updating version in dev environment by default it is set to false.
+You can add custom options to modify the behaviour of plugin.
+
+1. `devMode`: Enables the plugin to work in devMode. This plugin runs in production mode, to enable this plugin development mode set the flag to true.
+2. `directory`: To chnage the name of the output zip directory. If not given a definite name it will create a zip file with a name **prod.zip**. The zip file will be created in the root directory.
+3.`directory`: Name of the directory which contains the `manifest.json` file. If not defined it will assume **src**.
+4.`updateType`: Defines the type of version update which can be `major` or `minor`.
