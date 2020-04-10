@@ -11,14 +11,15 @@ class BrowserExtensionPlugin {
     apply(compiler) {
         compiler.hooks.emit.tap("BrowserExtensionPlugin", (stats, cb)=> {
            let dirFormat=false;
-            fs.access("./src", (error) =>{
+           let dirName = this.options.directory || "src";
+            fs.access(`./${dirName}`, (error) =>{
                 if (error) {
-                  console.log(chalk.bold.redBright("Extension Plugin ERR: src directory is missing"));
+                  console.log(chalk.bold.redBright("Extension Plugin ERR: directory missing"));
                 } else {
                     dirFormat=true;
                     if(dirFormat && this.checkWorkingEnv()){
-                        this.createzipFile();
-                        this.changeVersion();
+                        this.createzipFile(dirName, `${this.options.name}.zip` || "prod.zip");
+                        this.changeVersion(dirName, this.options.updateType || "minor");
                     }
                 }
               })
@@ -28,8 +29,8 @@ class BrowserExtensionPlugin {
         if(process.env.NODE_ENV==="production" || devMode) 
             return true;
     }
-    createzipFile() {
-        let output = fs.createWriteStream(`${options.name}.zip` || "prod.zip");
+    createzipFile(dirName, outputFileName) {
+        let output = fs.createWriteStream(outputFileName);
         let archive = archiver("zip");
 
         output.on("close", function(){
@@ -43,13 +44,15 @@ class BrowserExtensionPlugin {
 
         archive.pipe(output);
 
-        archive.directory('src/', false);
-        console.log(chalk.bold.cyanBright("prod.zip file created in root directory"))
+        archive.directory(`${dirName}/`, false);
+        console.log(chalk.bold.cyanBright(`${dirName}.zip file created in root directory`))
         
         archive.finalize();
     }
-    changeVersion() {
-        bump('src/manifest.json', { minor : 1 })
+    changeVersion(dirName, versionUpdateType) {
+        let updateObject = {}
+        updateObject[versionUpdateType] = 1;
+        bump(`${dirName}/manifest.json`, updateObject);
     }
     
 }
