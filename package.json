@@ -1,6 +1,6 @@
 {
   "name": "extension-build-webpack-plugin",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Creating production ready zip file and update version of browser extension",
   "main": "index.js",
   "files": [
