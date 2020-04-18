@@ -1,4 +1,4 @@
-# Webpack plugin for extension build
+# 📦 Webpack plugin for extension build
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This plugin helps to create a production ready build for chrome extension. This helps in updating the version of manifest.json file and create a zip folder of the source code.
