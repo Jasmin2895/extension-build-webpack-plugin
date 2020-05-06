@@ -1,6 +1,6 @@
 {
   "name": "extension-build-webpack-plugin",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Creating production ready zip file and update version of browser extension",
   "main": "index.js",
   "files": [
@@ -8,10 +8,10 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "test": "standard src/*",
+    "test": "standard index.js",
     "babel-version": "babel --version",
-    "build": "babel src/index.js --out-dir dist --copy-files --source-maps",
-    "prepublishOnly": "babel src --out-dir dist --copy-files --source-maps"
+    "build": "babel index.js --out-dir dist --copy-files --source-maps",
+    "prepublishOnly": "babel index.js --out-dir dist --copy-files --source-maps"
   },
   "keywords": [
     "webpack",
