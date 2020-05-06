@@ -36,7 +36,7 @@ build/Release
 node_modules/
 jspm_packages/
 .vscode/
-.DS_Store/
+/DS_Store
 
 # Typescript v1 declaration files
 typings/

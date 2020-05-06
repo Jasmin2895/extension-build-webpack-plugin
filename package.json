@@ -4,8 +4,7 @@
   "description": "Creating production ready zip file and update version of browser extension",
   "main": "index.js",
   "files": [
-    "src",
-    "dist"
+    "index.js"
   ],
   "scripts": {
     "clean": "rimraf dist",
