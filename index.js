@@ -6,6 +6,7 @@ require('dotenv').config()
 
 class BrowserExtensionPlugin {
     constructor(options) {
+        this.options = options;
         this.checkWorkingEnv(options)
     }
     apply(compiler) {
@@ -17,16 +18,16 @@ class BrowserExtensionPlugin {
                   console.log(chalk.bold.redBright("Extension Plugin ERR: directory missing"));
                 } else {
                     dirFormat=true;
-                    if(dirFormat && this.checkWorkingEnv()){
-                        this.createzipFile(dirName, `${this.options.name}.zip` || "prod.zip");
+                    if(dirFormat && this.checkWorkingEnv(this.options)){
+                        this.createzipFile(dirName, `${this.options.name}` || "prod");
                         this.changeVersion(dirName, this.options.updateType || "minor");
                     }
                 }
               })
         })        
     }
-    checkWorkingEnv(devMode) {
-        if(process.env.NODE_ENV==="production" || devMode) 
+    checkWorkingEnv(options) {
+        if(process.env.NODE_ENV==="production" || options.devMode) 
             return true;
     }
     createzipFile(dirName, outputFileName) {
