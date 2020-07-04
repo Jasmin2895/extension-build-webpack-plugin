@@ -10,7 +10,7 @@ This plugin helps to create a production ready build for chrome extension. This 
 npm i extension-build-webpack-plugin --save-dev
 ```
 
-This extenion uses src directory to create a zip folder. In order to use this plugin make sure all the browser extension files are in src directory including the `manifest.json` file.
+This extenion uses src directory to create a zip folder. In order to use the plugin make sure all the browser extension files are in src directory including the `manifest.json` file.
 
 ## Usage
 
