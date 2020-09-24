@@ -45,7 +45,7 @@ module.exports = {
 ```
 ## Custom Options
 
-You can add custom options to modify the behaviour of plugin.
+You can add the following custom options to modify the behaviour of plugin.
 
 1. `devMode`: Enables the plugin to work in local development mode. This plugin by default runs in production mode, to enable this plugin in development mode set this flag to **true**.
 2. `name`: To modify the name of the output zip directory. If not given a definite name it will create a zip file with a name **prod.zip**. The zip file will be created in the root directory.
